@@ -22,6 +22,7 @@ def update_balance() -> Tuple[Response, int]:
     user_id: int = int(request.args.get('userId'))
     city: str = request.args.get('city')
     temperature = weather.fetch_weather(city)
+
     if not temperature:
         # User receives 500 Error if there are any problems with WeatherAPI
         return jsonify({'error': 'Failed to fetch weather data.'}), 500
@@ -48,7 +49,7 @@ def get_user_and_update_balance(user_id, temperature):
         return jsonify({'error': 'Insufficient balance.'}), 400
 
     user.update_balance(new_balance)
-    # User receives 200 (Response is successful)
+    # User receives 200 (Successful response)
     return jsonify({'message': 'Balance updated successfully.'}), 200
 
 

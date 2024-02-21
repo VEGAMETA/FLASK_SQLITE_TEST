@@ -17,6 +17,4 @@ def create_and_fill_users_table(app: Flask, db: SQLAlchemy):
             for _ in range(5):
                 username = f"user{_ + 1}"
                 balance = random.randint(5000, 15000)
-                user = User(username=username, balance=balance)
-                db.session.add(user)
-        db.session.commit()
+                User.add_user(username=username, balance=balance)
