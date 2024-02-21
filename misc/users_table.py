@@ -11,7 +11,6 @@ def create_and_fill_users_table(app: Flask, db: SQLAlchemy):
     :param db:
     :return:
     """
-    # Needed for Flask
     with app.app_context():
         # Creates table if not
         db.create_all()

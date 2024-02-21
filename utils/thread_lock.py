@@ -5,6 +5,11 @@ lock = threading.Lock()
 
 
 def locking(func):
+    """
+    Thread locking decorator
+    :param func:
+    :return:
+    """
     def wrapper(*args, **kwargs):
         acquire = lock.acquire(blocking=False)
         while not acquire:
