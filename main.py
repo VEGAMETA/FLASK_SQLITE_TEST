@@ -23,7 +23,7 @@ def update_balance() -> Tuple[Response, int]:
 
     user_id: int = int(request.args.get('userId'))
     while user_id in users_processing:
-        time.sleep(0.001)
+        time.sleep(0.005)
     users_processing.add(user_id)  # Locking for user
 
     city: str = request.args.get('city')
