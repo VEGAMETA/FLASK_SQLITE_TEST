@@ -10,6 +10,7 @@ def locking(func):
     :param func:
     :return:
     """
+
     def wrapper(*args, **kwargs):
         acquire = lock.acquire(blocking=False)
         while not acquire:
