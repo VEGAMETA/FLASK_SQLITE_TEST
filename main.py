@@ -20,14 +20,18 @@ def update_balance() -> Tuple[Response, int]:
     Route for balance updating
     :return:
     """
-
     user_id: int = int(request.args.get('userId'))
+    city: str = request.args.get('city')
+
+    temperature = weather.fetch_weather(city)
+    if not temperature:
+        # User receives 500 Error in case of WeatherAPI problems
+        return jsonify({'error': 'Failed to retrieve weather data.'}), 500
+
     while user_id in users_processing:
         time.sleep(0.005)
     users_processing.add(user_id)  # Locking for user
 
-    city: str = request.args.get('city')
-    temperature = weather.fetch_weather(city)
     try:
         user: User = User.get_user_by_id(user_id)
         if not user:
