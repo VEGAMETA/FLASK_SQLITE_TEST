@@ -1,4 +1,4 @@
-import time
+import asyncio
 from typing import Tuple
 from models.base import db
 from models.user import User
@@ -15,7 +15,7 @@ users_processing: set[int] = set()
 
 
 @app.route('/update_balance')
-def update_balance() -> Tuple[Response, int]:
+async def update_balance() -> Tuple[Response, int]:
     """
     Route for balance updating
     :return:
@@ -29,7 +29,7 @@ def update_balance() -> Tuple[Response, int]:
         return jsonify({'error': 'Failed to retrieve weather data.'}), 500
 
     while user_id in users_processing:
-        time.sleep(0.005)
+        await asyncio.sleep(0.005)
     users_processing.add(user_id)  # Locking for user
 
     try:
