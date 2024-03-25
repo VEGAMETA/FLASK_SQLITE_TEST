@@ -1,16 +1,15 @@
 import random
-from models.user import User
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 
-
-def create_and_fill_users_table(app: Flask, db: SQLAlchemy):
+def create_and_fill_users_table():
     """
     Creates and fills users table if it was not
     :param app:
     :param db:
     :return:
     """
+    from models.user import User
+    from main import app
+    from models.base import db
     with app.app_context():
         db.create_all()
         if User.query.count() == 0:

@@ -38,6 +38,7 @@ class WeatherAPI:
             data = response.json()
             temperature = round(data['main']['temp'])
             self.cache[city] = (temperature, time.monotonic())
+            print(temperature)
             return temperature
         else:
             print(f"Failed to fetch weather data for {city}.")

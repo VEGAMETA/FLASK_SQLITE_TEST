@@ -1,7 +1,7 @@
-from models.base import db, BaseModel
+from models.base import db
 
 
-class User(BaseModel):
+class User(db.Model):
     """
     User model handle users table
     """
@@ -21,7 +21,6 @@ class User(BaseModel):
             raise ValueError("Balance must be >= 0")
 
         self.balance = balance
-        db.session.commit()
 
     def update_username(self, username: str) -> None:
         """
@@ -34,16 +33,15 @@ class User(BaseModel):
             raise ValueError("Username already exists")
 
         self.username = username
-        db.session.commit()
 
     @staticmethod
-    def get_user_by_id(user_id: int) -> 'User':
+    def get_user_by_id(user_id: int, session) -> 'User':
         """
         Returns user by id
         :param user_id:
         :return:
         """
-        return User.query.filter_by(id=user_id).first()
+        return session.query(User.balance).with_for_update().filter_by(id=user_id).first()
 
     @staticmethod
     def add_user(username, balance) -> None:
